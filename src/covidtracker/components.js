@@ -172,13 +172,10 @@ const Chart = () => {
 
 const Chart2 = () => {
 
-    const {dailyData} = useContext(CovidContext);
-
-    //console.log(dailyData)
-    if(!dailyData) return <h4>Loading...</h4>
+    const {dailyData, currentCountry} = useContext(CovidContext);
 
     //console.log(lineChart);
-    return (
+    return ( dailyData.length ? 
         <div className='chart-container2'> 
            <Line data = {
                     {
@@ -204,7 +201,7 @@ const Chart2 = () => {
                     } 
                 }
             />
-        </div>
+        </div> : <div>Loading...</div>
     );
 }
 
@@ -295,13 +292,14 @@ const MainContainer = () => {
             {/* Navbar or Header */}
            <header className='header'>
                 <div className="brand">
-                    <button onClick={openMenu}>
+                    <button>
                         &#9776;
                     </button>
-                    <Link to= '/' >COVID-19 CURVE - Liloan, Cebu</Link>
+                    <Link to= '/'>COVID-19 CURVE </Link>
                 </div>
                 <div className="header-links">
-                    <a href="/">About</a>
+                    
+                    <a href="/">Liloan, Cebu</a>
                     {/* {
                         userInfo? 
                         <Link to = '/profile'>{userInfo.name}</Link>:
@@ -333,12 +331,13 @@ const MainContainer = () => {
                         </ul>
                     </aside>
                     <Cards /> 
-                    <CountryPicker/>
+                    {/* <CountryPicker/> */}
                     <h3>Total Cases</h3>
                     <Chart/>
                     <br/>
                     <h3>Daily Cases</h3>
                     <Chart2/>
+                    <h5>By Van Darrell Ponce. July 2020. </h5>
                     
                 </div>
 
