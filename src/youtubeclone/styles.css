@@ -1,0 +1,23 @@
+
+.grid-container{
+    justify-content: center;
+}
+
+.item{
+    justify-content: center;
+    align-items: center;
+}
+
+.search-bar{
+background:darkred
+}
+
+.video-content{
+    min-height: 100vh;
+    background: floralwhite;
+    
+}
+
+.video-list{
+   background: lavender;
+}

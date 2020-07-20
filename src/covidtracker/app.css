@@ -1,0 +1,160 @@
+html{
+    font-size: 92.5%; /* 16px * 62.5 = 10px = 1rem */
+    box-sizing: border-box;
+  }
+  body{
+    font: 1rem Helvetica;
+    height: 100vh;
+    margin: 0;
+  }
+
+
+ .cards-container {
+     margin: 20px 0;
+     
+     
+ }
+
+ .card {
+     margin: 0 4% !important;
+     height: 180px;
+     
+ }
+
+ .infected {
+     border-bottom: 10px solid rgb(217, 230, 35);
+    
+ }
+
+ .recovered {
+    border-bottom: 10px solid rgba(12, 184, 112)
+}
+
+.deaths {
+    border-bottom: 10px solid rgba(247, 6, 6)
+}
+
+.chart-container{
+    display:flex;
+    justify-content: center;
+    width: 73%;
+}
+.chart-container2{
+  display:flex;
+  justify-content: center;
+  width: 78%;
+}
+.form-control{
+    margin-bottom: 30px !important;
+}
+
+.image{
+    width:370px;
+    margin-top: 50px;
+}
+
+
+.flex-container-main{
+    display: flex;
+    flex-wrap: wrap;
+    background-image: url('/img/liveloveliloan.jpg');
+}
+
+.flex-item-one{
+    display:flex;
+    padding: 1% 2%;
+    min-height: 0vh;
+    flex-grow: 2;
+    flex-direction: column;
+    align-items: center; 
+    
+}
+
+.flex-item-two{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    min-height: 90vh;
+    flex-grow: 3;
+    min-width: 40vw;
+
+    
+}
+.flex-item-three{
+    display:flex;
+    padding: 1% 2%;
+    min-height: 25vh;
+    flex-grow: 2;
+    flex-direction: column;
+    align-items: center; 
+   
+}
+/** Header */
+.header{
+    grid-area: header;
+    background-color: #293644;
+    color: #ffffff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0rem;
+  }
+  .brand a{
+    color: #ffffff;
+    font-size: 2.5rem;
+    font-weight: bold;
+    text-decoration: none;
+  }
+  .header-links a{
+    color:#ffffff;
+    text-decoration: none;
+    padding: 1rem;
+  
+  }
+  .header-links a:hover{
+    color:#d86316;
+  }
+  button{
+    font-size: 1.2rem;
+  }
+
+  /** Sidebar */
+  .brand button {
+    font-size: 3rem;
+    padding: .5rem;
+    background: none;
+    border: none;
+    color:#ffffff;
+    cursor: pointer;
+  }
+  .sidebar{
+    position: fixed;
+    transition: all .5s;
+    transform: translateX(-95rem);
+    width: 30rem;
+    background-color: #f0f0f0;
+    height: 100%;
+  }
+  .sidebar.open{
+    transform: translateX(-42.5rem);
+  }
+  
+  .sidebar-close-button{
+    border-radius: 50%;
+    border: .1rem #000000 solid;
+    width: 3rem;
+    height: 3rem;
+    padding: .5rem;
+    font-size: 2rem;
+    padding-top: 0;
+    cursor: pointer;
+    position: absolute;
+    right: .5rem;
+    top: 1.5rem
+  }
+
+
+
+  
+
