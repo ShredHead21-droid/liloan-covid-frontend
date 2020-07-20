@@ -31,7 +31,7 @@ const CovidContextProvider = (props) => {
             setDailyData(res.data)
         }) */
         axios
-        .get(`/api/covid/daily`)
+        .get(`https://cors-anywhere.herokuapp.com/https://liloan-covid-api.herokuapp.com/api/covid/daily`)
         .then( res => {
             const data = res.data
             const total = data[data.length-1]
