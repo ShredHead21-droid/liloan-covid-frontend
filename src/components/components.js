@@ -1,29 +1,27 @@
-import './app.css';
 import React, { useContext } from 'react'
-import { CovidContext } from './api-context';
+import { CovidContext } from '../context/api-context';
 /** For Card Component */
 import {Card, CardContent, Typography, Grid, FormControl, NativeSelect} from '@material-ui/core'
 import CountUp from 'react-countup'
 /** For Chart Component */
 import {Line, Bar} from 'react-chartjs-2'
-import SearchAppBar from './searchbar'
 import axios from 'axios';
-import { Link, Route, Switch } from 'react-router-dom';
-
+import BarangayBarChart from './BarangayBarChart';
+import { Route } from 'react-router-dom';
 
 
 const Cards = () => {
-    const {covidData, theme, dailyData} = useContext(CovidContext);
+    const {totalData, theme, dailyData} = useContext(CovidContext);
 
     const currentTheme = theme.isLightTheme ? theme.lightTheme : theme.darkTheme
     
-    if (!covidData.confirmed) {
+    if (!totalData.confirmed) {
         return 'Fetching Data...'
     }
 
-    const date = new Date(covidData.lastUpdate).toDateString()
+    const date = new Date(totalData.lastUpdate).toDateString()
 
-    //console.log(covidData)
+    //console.log(totalData)
   
     
     return ( 
@@ -32,23 +30,23 @@ const Cards = () => {
                 <Grid item component = {Card} className = 'card infected' xs={12} md={3} style={{background: currentTheme.cardColor}}>
                     <CardContent>
                         <Typography color = 'textSecondary' gutterBottom> Infected </Typography>
-                        <Typography variant ='h5'> 
+                        <Typography variant ='h4'> 
                             <CountUp start={0} 
-                                    end={covidData.confirmed} 
+                                    end={totalData.confirmed} 
                                     duration={3} 
                                     separator=','
                             />
                         </Typography>
-                        <Typography color = 'textSecondary'> <b>{dailyData[dailyData.length - 1].newConfirmed}</b> New Case/s as of {date} </Typography>
+                        <Typography color = 'textSecondary' > <b>{dailyData[dailyData.length - 1].newConfirmed}</b> New Case/s as of {date} </Typography>
                         
                     </CardContent>
                 </Grid>
                 <Grid item component = {Card} className = 'card recovered' xs={12} md={3} style={{background: currentTheme.cardColor}}>
                     <CardContent>
                         <Typography color = 'textSecondary' gutterBottom> Recovered </Typography>
-                        <Typography variant ='h5'> 
+                        <Typography variant ='h4'> 
                         <CountUp start={0} 
-                                    end={covidData.recovered} 
+                                    end={totalData.recovered} 
                                     duration={3} 
                                     separator=','
                             />
@@ -59,9 +57,9 @@ const Cards = () => {
                 <Grid item component={Card} className = 'card deaths' xs={12} md={3} style={{background: currentTheme.cardColor}}>
                     <CardContent>
                         <Typography color = 'textSecondary' gutterBottom> Deaths </Typography>
-                        <Typography variant = 'h5'>  
+                        <Typography variant = 'h4'>  
                             <CountUp start={0} 
-                                    end={covidData.deaths} 
+                                    end={totalData.deaths} 
                                     duration={3} 
                                     separator=','
                             />
@@ -156,12 +154,6 @@ const Chart = () => {
     ): null
 
     //console.log(dailyData)
-    if(currentCountry) {
-        // console.log(dailyData.map(({deaths}) => deaths.total))
-        // console.log(dailyData.map(({confirmed}) => confirmed.total))
-        console.log(currentCountry.confirmed.value)
-    }   
-
     //console.log(lineChart);
     return (
         <div className='chart-container'> 
@@ -172,7 +164,7 @@ const Chart = () => {
 
 const Chart2 = () => {
 
-    const {dailyData, currentCountry} = useContext(CovidContext);
+    const {dailyData} = useContext(CovidContext);
 
     //console.log(lineChart);
     return ( dailyData.length ? 
@@ -256,102 +248,9 @@ const CountryPicker = (props) => {
 }
 
 
-// const Mysidebar = () => {
-//     return (
-//         <div classname='sidebar-container'> 
-//             <div className='one'>
-               
-//             </div>
-//             <div className='two'>
-               
-//             </div>
-//             <div className='three'>
-               
-//             </div>
-//         </div>
-//     );
-// }
-
-const MainContainer = () => {
-
-    const {theme, currentCountry} = useContext(CovidContext);
-    const currentTheme = theme.isLightTheme ? theme.lightTheme : theme.darkTheme;
-
-    if(currentCountry !== null){
-        console.log(currentCountry)
-    }
-    const openMenu = (e) => {
-        document.querySelector('.sidebar').classList.add("open")
-    }
-    const closeMenu = (e) => {
-        document.querySelector('.sidebar').classList.remove("open")
-    }
-    
-    return ( 
-        <div>
-            {/* Navbar or Header */}
-           <header className='header'>
-                <div className="brand">
-                    <button>
-                        &#9776;
-                    </button>
-                    <Link to= '/'>COVID-19 CURVE </Link>
-                </div>
-                <div className="header-links">
-                    
-                    <a href="/">Liloan, Cebu</a>
-                    {/* {
-                        userInfo? 
-                        <Link to = '/profile'>{userInfo.name}</Link>:
-                        <Link to="/signin">Signin</Link>
-                    } */}
-                      
-                </div>
-            </header>
-
-            <div className = 'flex-container-main' >
-                <div className = 'flex-item-one' >
-        
-                </div>
-
-                <div className='flex-item-two' style={{background: currentTheme.containerColor}}>
-                {/* <div className='flex-item-two'> */}
-
-                    {/* Sidebar */}
-                    <aside className="sidebar">
-                        <h3>   Other Data</h3>
-                        <button className="sidebar-close-button" onClick={closeMenu}>x</button>
-                        <ul>
-                            <li>
-                                <a href="index.html">Show Table Data</a>
-                            </li>
-                            <li>
-                                <a href="index.html">Show Other Data</a>
-                            </li>
-                        </ul>
-                    </aside>
-                    <Cards /> 
-                    {/* <CountryPicker/> */}
-                    <h3>Total Cases</h3>
-                    <Chart/>
-                    <br/>
-                    <h3>Daily Cases</h3>
-                    <Chart2/>
-                    <h5>By Van Darrell Ponce. July 2020. </h5>
-                    
-                </div>
-
-                <div className='flex-item-three' >
-
-                </div>
-            </div>
-        </div>
-     );
-}
- 
-
 export {Cards,
         Chart,
         CountryPicker,
-        MainContainer
+        Chart2,
+        BarangayBarChart
 }

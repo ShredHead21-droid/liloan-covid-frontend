@@ -17,32 +17,32 @@ html{
 
  .card {
      margin: 0 4% !important;
-     height: 180px;
+     height: 160px;
      
  }
 
  .infected {
-     border-bottom: 10px solid rgb(217, 230, 35);
+     border-bottom: 20px solid rgb(217, 230, 35);
     
  }
 
  .recovered {
-    border-bottom: 10px solid rgba(12, 184, 112)
+    border-bottom: 20px solid rgba(12, 184, 112)
 }
 
 .deaths {
-    border-bottom: 10px solid rgba(247, 6, 6)
+    border-bottom: 20px solid rgba(247, 6, 6)
 }
 
 .chart-container{
     display:flex;
     justify-content: center;
-    width: 73%;
+    width: 93%;
 }
 .chart-container2{
   display:flex;
   justify-content: center;
-  width: 78%;
+  width: 93%;
 }
 .form-control{
     margin-bottom: 30px !important;
@@ -102,15 +102,16 @@ html{
   }
   .brand a{
     color: #ffffff;
-    font-size: 2rem;
+    font-size: 1.5rem;
     font-weight: bold;
     text-decoration: none;
   }
   .header-links a{
     color:#ffffff;
     text-decoration: none;
-    padding: 3rem;
-    font-size: 1.5rem;
+    padding: .5rem;
+    font-size: 1rem;
+    align-items: center;
   
   }
   .header-links a:hover{

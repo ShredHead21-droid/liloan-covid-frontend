@@ -8,11 +8,14 @@ const CovidContext = createContext();
 const CovidContextProvider = (props) => {
     /** COVID DATA FROM API */
     // used by Cards
-    const [covidData, setStats] = useState({})      // covidData.confirmed.value, etc, covidData.lastUpdate
+    const [totalData, setTotalData] = useState({})      
     // used by Chart
-    const [dailyData, setDailyData] = useState([]) //dailyData[x].confirmed.total, dailyData[x].deaths.total
+    const [dailyData, setDailyData] = useState([]) 
+    const [barangayData, setBarangayData] = useState([])
     // used by CountryPicker
-    const [countries, setCountries] = useState([])  // countries: [{name, iso2, iso3}]  ex. countries[x].name, countries[x].iso2, countries[x].iso3
+    const [countries, setCountries] = useState([])  
+
+
     // Fetching General Data 
     useEffect( () => {
       /*  axios
@@ -25,18 +28,13 @@ const CovidContextProvider = (props) => {
 
 
         // fetch daily data 
-       /*  axios
-        .get(`${url}/daily`)
-        .then( res => {
-            setDailyData(res.data)
-        }) */
         axios
         .get(`https://cors-anywhere.herokuapp.com/https://liloan-covid-api.herokuapp.com/api/covid/daily`)
         .then( res => {
             const data = res.data
             const total = data[data.length-1]
             setDailyData(data)
-            setStats({
+            setTotalData({
                 confirmed: total.totalConfirmed,
                 recovered: total.totalRecovered,
                 deaths: total.totalDeath,
@@ -44,7 +42,12 @@ const CovidContextProvider = (props) => {
             }
 
             )
-            //console.log(res.data)
+        })
+        // fetch barangay data
+        axios
+        .get(`https://cors-anywhere.herokuapp.com/https://liloan-covid-api.herokuapp.com/api/covid/barangay`)
+        .then( res => {
+            setBarangayData(res.data)
         })
 
         // fetch countries 
@@ -60,7 +63,7 @@ const CovidContextProvider = (props) => {
     const fetchCountry = (country) => { 
         setCountry(country)
         if (country!==null){
-            setStats({confirmed:{value:country.confirmed.value}, 
+            setTotalData({confirmed:{value:country.confirmed.value}, 
                     recovered:{value:country.recovered.value}, 
                     deaths:{value:country.deaths.value}, 
                     lastUpdate:country.lastUpdate})
@@ -82,8 +85,8 @@ const CovidContextProvider = (props) => {
         //console.log(countries)
     }
     return(
-        <CovidContext.Provider value={{covidData,
-                                       setStats,
+        <CovidContext.Provider value={{totalData,
+                                       setTotalData,
                                        dailyData, 
                                        theme, 
                                        toggleTheme, 
@@ -91,7 +94,8 @@ const CovidContextProvider = (props) => {
                                        currentCountry,
                                        fetchCountry,
                                        setDailyData,
-                                       setCountry}}>
+                                       setCountry,
+                                       barangayData}}>
             {props.children}
         </CovidContext.Provider>
     )

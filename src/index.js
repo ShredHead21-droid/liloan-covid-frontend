@@ -1,8 +1,10 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-//import CovidTrackerApp from './covidtracker/covidtrackerapp'
-import YoutubeApp from './youtubeclone/YoutubeApp'
-import MainApp from './App'
+import App from './App'
+import { CovidContextProvider } from './context/api-context'
 
-
-ReactDOM.render(<MainApp />, document.getElementById('root'))   
+ReactDOM.render(
+<CovidContextProvider>
+<App />
+</CovidContextProvider>
+, document.getElementById('root'))   
