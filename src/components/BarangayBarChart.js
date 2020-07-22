@@ -3,25 +3,26 @@ import {Bar} from 'react-chartjs-2'
 
 const BarangayBarChart = (props) => {
 
-    const barangayNames = props.barangayNames
-    const barangayCounts = props.barangayCounts
-    const barColor = props.barColor
+    const labels = props.labels
+    const data = props.data
+    const barColors = props.barColors
+
 
     return (
     <div className="chart-container">
         <Bar data={{
-            labels:barangayNames,
+            labels: labels,
             datasets:[
                         {
                         label:'People',
-                        backgroundColor: barColor, 
-                        data:barangayCounts
+                        backgroundColor: barColors, 
+                        data:data,
                         }
                     ]
         }} 
         options = {{
             legend:{display:false},
-            title:{display:false}
+            title:{display:true}
         }} /> 
         
     </div> 
