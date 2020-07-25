@@ -25,11 +25,13 @@ const Cards = () => {
   
     
     return ( 
+        <div>
+       
         <div className= 'cards-container'>
             <Grid container spacing = {3} justify='flex-start'>
                 <Grid item component = {Card} className = 'card infected' xs={12} md={3} style={{background: currentTheme.cardColor}}>
                     <CardContent>
-                        <Typography color = 'textSecondary' gutterBottom> Infected </Typography>
+                        <Typography color = 'textSecondary' gutterBottom> Liloan Total Infected </Typography>
                         <Typography variant ='h4'> 
                             <CountUp start={0} 
                                     end={totalData.confirmed} 
@@ -43,7 +45,7 @@ const Cards = () => {
                 </Grid>
                 <Grid item component = {Card} className = 'card recovered' xs={12} md={3} style={{background: currentTheme.cardColor}}>
                     <CardContent>
-                        <Typography color = 'textSecondary' gutterBottom> Recovered </Typography>
+                        <Typography color = 'textSecondary' gutterBottom> Liloan Total Recovered </Typography>
                         <Typography variant ='h4'> 
                         <CountUp start={0} 
                                     end={totalData.recovered} 
@@ -56,7 +58,7 @@ const Cards = () => {
                 </Grid>
                 <Grid item component={Card} className = 'card deaths' xs={12} md={3} style={{background: currentTheme.cardColor}}>
                     <CardContent>
-                        <Typography color = 'textSecondary' gutterBottom> Deaths </Typography>
+                        <Typography color = 'textSecondary' gutterBottom> Liloan Total Deaths </Typography>
                         <Typography variant = 'h4'>  
                             <CountUp start={0} 
                                     end={totalData.deaths} 
@@ -68,6 +70,7 @@ const Cards = () => {
                     </CardContent>
                 </Grid>
             </Grid>
+        </div>
         </div>
      );
 }

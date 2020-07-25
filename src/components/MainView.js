@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
 import { Chart2, Chart, Cards } from './components';
-import BarangayBarChart from './BarangayBarChart';
 import { CovidContext } from '../context/api-context';
 
 

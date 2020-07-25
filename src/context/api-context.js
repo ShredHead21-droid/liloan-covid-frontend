@@ -11,7 +11,8 @@ const CovidContextProvider = (props) => {
     const [totalData, setTotalData] = useState({})      
     // used by Chart
     const [dailyData, setDailyData] = useState([]) 
-    const [barangayData, setBarangayData] = useState([])
+    const [barangaysData, setBarangaysData] = useState([])
+    const [barangayData, setBarangayData] = useState(null)
     // used by CountryPicker
     const [countries, setCountries] = useState([])  
 
@@ -47,7 +48,7 @@ const CovidContextProvider = (props) => {
         axios
         .get(`https://cors-anywhere.herokuapp.com/https://liloan-covid-api.herokuapp.com/api/covid/barangay`)
         .then( res => {
-            setBarangayData(res.data)
+            setBarangaysData(res.data)
         })
 
         // fetch countries 
@@ -95,7 +96,7 @@ const CovidContextProvider = (props) => {
                                        fetchCountry,
                                        setDailyData,
                                        setCountry,
-                                       barangayData}}>
+                                       barangaysData}}>
             {props.children}
         </CovidContext.Provider>
     )

@@ -4,14 +4,14 @@ import {Cards, Chart, Chart2, BarangayBarChart} from './components/components'
 import {CovidContext} from './context/api-context'
 import { getGeocodeURL } from './util/utils'
 import Axios from 'axios'
-import { BrowserRouter, Route } from 'react-router-dom'
+import { BrowserRouter, Route, withRouter, Link } from 'react-router-dom'
 
 
-const App = () => {
+const App = (props) => {
 
-    const {theme, barangayData} = useContext(CovidContext);
+    const {theme, barangaysData, barangayData} = useContext(CovidContext);
     const currentTheme = theme.isLightTheme ? theme.lightTheme : theme.darkTheme;
-    const [currentLocation, setCurrentLocation] = useState({})
+    const [currentLocation, setCurrentLocation] = useState(null)
 
     /*  const openMenu = (e) => {
         document.querySelector('.sidebar').classList.add("open")
@@ -28,6 +28,7 @@ const App = () => {
                 
                 Axios.get(getGeocodeURL(latitude, longitude)).then(res => {
                     const contexts = res.data.features[0].context
+                    if(!contexts) return setCurrentLocation(res.data.features[0])
                     if(contexts.length === 4){
                         return setCurrentLocation(
                             {...res.data.features[0], 
@@ -62,9 +63,26 @@ const App = () => {
         } else {
             alert("Geolocation API is not supported in your browser.");
         } 
-        console.log(currentLocation)
-        
+        console.log('location')
     }
+    const locationDetails = barangayData && currentLocation && currentLocation.barangay ? 
+                        (<div>
+                            <h1>{`You are currently located in Barangay ${currentLocation.barangay}, ${currentLocation.municipality}, ${currentLocation.province}`}</h1>
+                            <h4><Link to='/'>Click here </Link>to display covid data around you.<Link to = '/' onClick = {e=> setCurrentLocation(null)}>Back</Link></h4>
+                            <h4>Wrong location? Try again <Link to = '/' onClick = {getLocation}>here</Link></h4>
+                        </div>) :
+                        !barangayData && currentLocation && currentLocation.barangay ? 
+                        (<div>
+                            <h1>{`You are currently located in Barangay ${currentLocation.barangay}, ${currentLocation.municipality}, ${currentLocation.province}`}</h1>
+                            <h4>Unfortunately, we don't have covid data available around you. <Link to = '/' onClick = {e=> setCurrentLocation(null)}>Back</Link></h4>
+                            <h4>Wrong location? Try again <Link to = '/' onClick = {getLocation}>here</Link></h4>
+                        </div>) :
+                        currentLocation && !currentLocation.barangay ?
+                        (<div>
+                            <h1>{`You are currently located in ${currentLocation.place_name}`}</h1>
+                            <h4>Unfortunately, we don't have covid data available around you. <Link to = '/' onClick = {e=> setCurrentLocation(null)}>Back</Link></h4>
+                            <h4>Wrong location? Try again <Link to = '/' onClick = {getLocation}>here</Link></h4>
+                        </div>) : null
     
     return(
         <BrowserRouter>
@@ -75,7 +93,7 @@ const App = () => {
            <header className='header'>
                 <div className="brand">
                     <button onClick = {getLocation}>
-                        &#9776;
+                        {/* <Link to = {`/barangay/${currentLocation.barangay}`}> */}&#9776;
                     </button>
                     <a href= '/'>COVID-19 CURVE </a>
                 </div>
@@ -112,7 +130,8 @@ const App = () => {
                             </li>
                         </ul>
                     </aside>
-                    <Route exact path = '/around' component = {Cards} />
+                    {currentLocation && locationDetails}
+                    <Route exact path = '/barangay/:barangay' component = {Cards} />
                     <Route exact path = '/around' component = {Chart} />
                     <Cards/>
                     {/* <CountryPicker/> */}
@@ -126,29 +145,29 @@ const App = () => {
                     <br/>
                     <h3>Barangay Confirmed Cases</h3>
                     <BarangayBarChart 
-                        labels = {barangayData.map(item => item.name)} 
-                        data = {barangayData.map(item => item.totalConfirmed)}
+                        labels = {barangaysData.map(item => item.name)} 
+                        data = {barangaysData.map(item => item.totalConfirmed)}
                         barColors = {'rgba(194, 243, 61, 0.7)'}
                         />
 
                     <br/>
                     <h3>Barangay Recovery Cases</h3>
                     <BarangayBarChart 
-                        labels = {barangayData.map(item => item.name)} 
-                        data = {barangayData.map(item => item.totalRecovered)}
+                        labels = {barangaysData.map(item => item.name)} 
+                        data = {barangaysData.map(item => item.totalRecovered)}
                         barColors = {'rgba(12, 184, 112, 0.9)'}
                         />
                     
                     <br/>
                     <h3>Barangay Death Cases</h3>
                     <BarangayBarChart 
-                        labels = {barangayData.map(item => item.name)} 
-                        data = {barangayData.map(item => item.totalDeath)}
+                        labels = {barangaysData.map(item => item.name)} 
+                        data = {barangaysData.map(item => item.totalDeath)}
                         barColors = {'rgba(247, 6, 6, 0.6)'}
                         />
                     <p>Van Darrell Ponce. July 2020. </p>
-                    <p>{currentLocation.place_name} </p>
-                    <p>{`${currentLocation.barangay}, ${currentLocation.municipality}, ${currentLocation.province} `}</p>
+                    {/* <p>{currentLocation.place_name} </p>
+                    <p>{`${currentLocation.barangay}, ${currentLocation.municipality}, ${currentLocation.province} `}</p> */}
 
                     
                 </div>
@@ -165,4 +184,4 @@ const App = () => {
     )
 }
 
-export default App;
+export default withRouter(App);
