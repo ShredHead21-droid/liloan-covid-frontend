@@ -31,7 +31,7 @@ const Cards = () => {
             <Grid container spacing = {3} justify='flex-start'>
                 <Grid item component = {Card} className = 'card infected' xs={12} md={3} style={{background: currentTheme.cardColor}}>
                     <CardContent>
-                        <Typography color = 'textSecondary' gutterBottom> Liloan Total Infected </Typography>
+                        <Typography color = 'textSecondary' gutterBottom> Liloan Active Cases </Typography>
                         <Typography variant ='h4'> 
                             <CountUp start={0} 
                                     end={totalData.confirmed} 
